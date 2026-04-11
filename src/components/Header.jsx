@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import logo from "./../assets/logo.png";
 import viber from "./../assets/socials/viber.svg";
 import whatsapp from "./../assets/socials/whatsapp.svg";
@@ -6,6 +6,9 @@ import linkedin from "./../assets/socials/linkedin.svg";
 import "./../assets/css/custom.css";
 import cross from "./../assets/header/cross.svg";
 import menu from "./../assets/header/menu.svg";
+import greekSvg from "./../assets/lngs/greek.svg"
+import englishSvg from "./../assets/lngs/english.svg"
+import { useTranslation } from "react-i18next";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -15,6 +18,8 @@ import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, useGSAP);
 
 const socials = [
+  { name: "Greek", icon: greekSvg, url: "el" },
+  { name: "English", icon: englishSvg, url: "en" },
   {
     name: "LinkedIn",
     icon: linkedin,
@@ -24,19 +29,34 @@ const socials = [
   { name: "WhatsApp", icon: whatsapp, url: "https://wa.me/306945294725" },
 ];
 
-const headerSections = [
-  { name: "Cretan Labdamun", icon: linkedin, url: "#home" },
-  { name: "About Us", icon: viber, url: "#about" },
-  { name: "Image Gallery", icon: whatsapp, url: "#gallery" },
-  { name: "Contact", icon: whatsapp, url: "#contact" },
-];
-
 const Header = () => {
   const logoRef = useRef(null);
   const headerRef = useRef(null);
   const containerRef = useRef(null);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { t, i18n } = useTranslation();
+
+  const headerSections = [
+    { name: t("header.cretan"), icon: linkedin, url: "#home" },
+    { name: t("header.about"), icon: viber, url: "#about" },
+    { name: t("header.imageGallery"), icon: whatsapp, url: "#gallery" },
+    { name: t("header.contact"), icon: whatsapp, url: "#contact" },
+  ];
+
+  const [currentLanguage, setCurrentLanguage] = useState("en");
+
+  useEffect(() => {
+    if (!i18n.language) {
+      return;
+    }
+    const langCode = i18n.language.split("-")[0];
+    setCurrentLanguage(langCode);
+  }, [i18n.language]);
+
+  const handleLanguageChange = (lng) => {
+    i18n.changeLanguage(lng);
+  };
 
   useGSAP(
     () => {
@@ -134,7 +154,7 @@ const Header = () => {
           <div className="flex gap-10 items-center justify-center text-lg font-poppins font-light">
             {headerSections.map((header) => (
               <a
-                key={header.name}
+                key={header.url}
                 href={header.url}
                 onClick={(e) => handleScroll(e, header.url)}
                 className="group transition-all duration-300 hover:-translate-y-1 max-w-max"
@@ -150,19 +170,28 @@ const Header = () => {
 
         {/* Desktop Socials (Hidden on < 1024px) */}
         <div className="hidden lg:flex gap-6 items-center justify-center">
-          {socials.map(({ icon, name, url }) => (
+          {socials.map(({ icon, name, url }) => {
+            const isLanguage = name === "English" || name === "Greek";
+            return (
             <a
               key={name}
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={isLanguage ? "#" : url}
+              target={isLanguage ? undefined : "_blank"}
+              rel={isLanguage ? undefined : "noopener noreferrer"}
               className="relative flex items-center justify-center group"
+              onClick={(e) => {
+                if (isLanguage) {
+                  e.preventDefault(); 
+                  handleLanguageChange(url);
+                }
+              }}
             >
               <img
                 src={icon}
                 alt={name}
                 className={`w-6 h-6 text-white cursor-pointer transition-all duration-300 group-hover:scale-120 group-hover:-translate-y-1
-                        ${name === "LinkedIn" ? "rounded-full" : ""}`}
+                        ${name === "LinkedIn" ? "rounded-full" : ""}
+                        ${currentLanguage === url ? "border border-black rounded-full p-px" : ""}`}
               />
 
               <div
@@ -176,7 +205,7 @@ const Header = () => {
                 </div>
               </div>
             </a>
-          ))}
+          )})}
         </div>
 
         {/* Mobile Hamburger Button (Visible on < 1024px) */}
@@ -216,7 +245,7 @@ const Header = () => {
         <div className="flex flex-col gap-6 text-lg font-poppins font-light mt-4">
           {headerSections.map((header) => (
             <a
-              key={header.name}
+              key={header.url}
               href={header.url}
               onClick={(e) => handleScroll(e, header.url)}
               className="border-b border-gray-100 pb-4 text-black hover:text-gray-500 transition-colors"

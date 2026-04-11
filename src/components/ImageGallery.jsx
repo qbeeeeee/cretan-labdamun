@@ -128,7 +128,7 @@ const ImageGallery = () => {
         </button>
 
         {/* Navigation Dots */}
-        <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-3 bg-black/20 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
+        <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3 bg-black/20 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
           {images.map((_, index) => {
             const isActive =
               currentIndex === index + 1 ||
@@ -142,7 +142,7 @@ const ImageGallery = () => {
                   if (!isTransitioning) setCurrentIndex(index + 1);
                 }}
                 className={`w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  isActive ? "bg-white w-6" : "bg-white/50 hover:bg-white/80"
+                  isActive ? "bg-white w-4 sm:w-6" : "bg-white/50 hover:bg-white/80"
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
