@@ -1,9 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import logo from "./../assets/logo.png";
 import viber from "./../assets/socials/viber.svg";
 import whatsapp from "./../assets/socials/whatsapp.svg";
 import linkedin from "./../assets/socials/linkedin.svg";
 import "./../assets/css/custom.css";
+import cross from "./../assets/header/cross.svg";
+import menu from "./../assets/header/menu.svg";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -33,6 +35,8 @@ const Header = () => {
   const logoRef = useRef(null);
   const headerRef = useRef(null);
   const containerRef = useRef(null);
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useGSAP(
     () => {
@@ -78,7 +82,6 @@ const Header = () => {
         0,
       );
 
-      // Optional: Shrink the fixed container so it doesn't block the screen
       tl.to(
         containerRef.current,
         {
@@ -93,6 +96,9 @@ const Header = () => {
 
   const handleScroll = (e, targetId) => {
     e.preventDefault();
+
+    // Close mobile menu when a link is clicked
+    setIsMenuOpen(false);
 
     gsap.to(window, {
       duration: 1,
@@ -113,17 +119,18 @@ const Header = () => {
         ref={logoRef}
         src={logo}
         alt="Cretan Labdamun"
-        className="h-[35vh] w-auto absolute z-50 pointer-events-auto"
+        className="h-[25vh] sm:h-[35vh] w-auto absolute z-52 pointer-events-auto"
       />
 
+      {/* Main Header Container */}
       <div
         ref={headerRef}
-        className="opacity-0 -translate-y-full w-full h-25 flex items-center justify-between border-b border-[#d9d9d9] px-9 py-2 bg-white pointer-events-auto"
+        className="opacity-0 -translate-y-full w-full h-25 flex items-center justify-between border-b border-[#d9d9d9] px-6 sm:px-9 py-2 bg-white pointer-events-auto relative z-[51]"
       >
-        {/* Empty div to take up space where the logo will eventually land */}
         <div className="w-20 h-20"></div>
 
-        <div className="flex items-center justify-center gap-10">
+        {/* Desktop Navigation (Hidden on < 1024px) */}
+        <div className="hidden lg:flex items-center justify-center gap-10">
           <div className="flex gap-10 items-center justify-center text-lg font-poppins font-light">
             {headerSections.map((header) => (
               <a
@@ -141,7 +148,8 @@ const Header = () => {
           </div>
         </div>
 
-        <div className="flex gap-6 items-center justify-center">
+        {/* Desktop Socials (Hidden on < 1024px) */}
+        <div className="hidden lg:flex gap-6 items-center justify-center">
           {socials.map(({ icon, name, url }) => (
             <a
               key={name}
@@ -158,17 +166,77 @@ const Header = () => {
               />
 
               <div
-                className="
-                                absolute top-10 flex flex-col items-center
-                                opacity-0 translate-y-0 scale-75
-                                group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100
-                                transition-all duration-300 pointer-events-none
-                                "
+                className="absolute top-10 flex flex-col items-center
+                           opacity-0 translate-y-0 scale-75
+                           group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100
+                           transition-all duration-300 pointer-events-none"
               >
                 <div className="px-3 py-1 text-xs text-black font-inter bg-black/10 backdrop-blur-md rounded-md border border-white/20">
                   {name}
                 </div>
               </div>
+            </a>
+          ))}
+        </div>
+
+        {/* Mobile Hamburger Button (Visible on < 1024px) */}
+        <button
+          className="block lg:hidden p-2 text-black focus:outline-none transition-transform active:scale-95"
+          onClick={() => setIsMenuOpen(true)}
+        >
+          <img src={menu} alt="|||" className="w-7 sm:w-8 h-7 sm:h-8" />
+        </button>
+      </div>
+
+      {/* Mobile Menu Backdrop Overlay */}
+      <div
+        className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-52 transition-opacity duration-300 lg:hidden ${
+          isMenuOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setIsMenuOpen(false)}
+      ></div>
+
+      {/* Mobile Slide-out Drawer */}
+      <div
+        className={`fixed top-0 right-0 h-full w-[80vw] max-w-sm bg-white z-53 transform transition-transform duration-500 ease-in-out flex flex-col pt-24 px-8 shadow-2xl pointer-events-auto lg:hidden ${
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        {/* Close Button Inside Mobile Menu */}
+        <button
+          className="absolute top-6 right-6 p-2 text-black focus:outline-none"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          <img src={cross} alt="|||" className="w-10 h-10" />
+        </button>
+
+        {/* Mobile Nav Links */}
+        <div className="flex flex-col gap-6 text-lg font-poppins font-light mt-4">
+          {headerSections.map((header) => (
+            <a
+              key={header.name}
+              href={header.url}
+              onClick={(e) => handleScroll(e, header.url)}
+              className="border-b border-gray-100 pb-4 text-black hover:text-gray-500 transition-colors"
+            >
+              {header.name}
+            </a>
+          ))}
+        </div>
+
+        {/* Mobile Social Links */}
+        <div className="flex gap-8 items-center justify-start mt-auto mb-12">
+          {socials.map(({ icon, name, url }) => (
+            <a key={name} href={url} target="_blank" rel="noopener noreferrer">
+              <img
+                src={icon}
+                alt={name}
+                className={`w-8 h-8 transition-transform active:scale-95 ${
+                  name === "LinkedIn" ? "rounded-full" : ""
+                }`}
+              />
             </a>
           ))}
         </div>

@@ -76,7 +76,7 @@ const ImageGallery = () => {
   }, [currentIndex, isTransitioning]);
 
   return (
-    <div className="flex flex-col items-center justify-center my-40">
+    <div className="flex flex-col items-center justify-center my-30 sm:my-40 px-4 sm:px-6 lg:px-8">
       <h1 className="text-center text-2xl font-montserrat font-bold">
         Image Gallery
       </h1>
@@ -110,25 +110,25 @@ const ImageGallery = () => {
         {/* Left Arrow */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-white/80 backdrop-blur-md cursor-pointer
+          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 bg-white/80 backdrop-blur-md cursor-pointer
          hover:bg-white/60 text-white hover:text-gray-900 rounded-full transition-all shadow-lg"
           aria-label="Previous slide"
         >
-          <img src={leftArrow} alt="<" className="h-5 w-auto" />
+          <img src={leftArrow} alt="<" className="h-4 sm:h-5 w-auto" />
         </button>
 
         {/* Right Arrow */}
         <button
           onClick={nextSlide}
-          className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-white/80 backdrop-blur-md cursor-pointer
+          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 bg-white/80 backdrop-blur-md cursor-pointer
          hover:bg-white/60 text-white hover:text-gray-900 rounded-full transition-all shadow-lg"
           aria-label="Next slide"
         >
-          <img src={rightArrow} alt="<" className="h-5 w-auto" />
+          <img src={rightArrow} alt="<" className="h-4 sm:h-5 w-auto" />
         </button>
 
         {/* Navigation Dots */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 bg-black/20 backdrop-blur-sm px-4 py-2 rounded-full">
+        <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-3 bg-black/20 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
           {images.map((_, index) => {
             const isActive =
               currentIndex === index + 1 ||
@@ -141,7 +141,7 @@ const ImageGallery = () => {
                 onClick={() => {
                   if (!isTransitioning) setCurrentIndex(index + 1);
                 }}
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                className={`w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
                   isActive ? "bg-white w-6" : "bg-white/50 hover:bg-white/80"
                 }`}
                 aria-label={`Go to slide ${index + 1}`}

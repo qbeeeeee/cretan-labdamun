@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const Hero = () => {
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
       <img
         src={heroImage}
         alt="Cretan Labdanum"
@@ -19,7 +19,7 @@ const Hero = () => {
 
       <div id="about" className="mt-20 font-montserrat max-w-4xl mx-auto">
         {/* The Hero Statement - Keeping this text-2xl for high impact */}
-        <p className="text-2xl font-light text-gray-900 leading-relaxed mb-12">
+        <p className="text-xl lg:text-2xl font-light text-gray-900 leading-relaxed mb-12">
           <strong className="font-bold">
             Rassoulis Stylianos General Trading
           </strong>{" "}
