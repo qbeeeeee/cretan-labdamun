@@ -12,6 +12,7 @@ import Labdanum9 from "./../assets/Labdanum9.webp";
 
 import leftArrow from "./../assets/left-arrow.svg";
 import rightArrow from "./../assets/right-arrow.svg";
+import { useTranslation } from "react-i18next";
 
 const images = [
   Labdanum4,
@@ -26,6 +27,7 @@ const images = [
 ];
 
 const ImageGallery = () => {
+  const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const trackRef = useRef(null);
@@ -78,7 +80,7 @@ const ImageGallery = () => {
   return (
     <div className="flex flex-col items-center justify-center my-30 sm:my-40 px-4 sm:px-6 lg:px-8">
       <h1 className="text-center text-2xl font-montserrat font-bold">
-        Image Gallery
+        {t("imageGallery.imageGal")}
       </h1>
 
       {/* Slider Viewport */}

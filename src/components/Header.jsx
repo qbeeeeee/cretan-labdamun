@@ -151,7 +151,7 @@ const Header = () => {
 
         {/* Desktop Navigation (Hidden on < 1024px) */}
         <div className="hidden lg:flex items-center justify-center gap-10">
-          <div className="flex gap-10 items-center justify-center text-lg font-poppins font-light">
+          <div className="flex gap-5 xl:gap-10 items-center justify-center text-lg font-poppins font-light">
             {headerSections.map((header) => (
               <a
                 key={header.url}
@@ -169,7 +169,7 @@ const Header = () => {
         </div>
 
         {/* Desktop Socials (Hidden on < 1024px) */}
-        <div className="hidden lg:flex gap-6 items-center justify-center">
+        <div className="hidden lg:flex gap-3 xl:gap-6 items-center justify-center">
           {socials.map(({ icon, name, url }) => {
             const isLanguage = name === "English" || name === "Greek";
             return (
@@ -256,18 +256,43 @@ const Header = () => {
         </div>
 
         {/* Mobile Social Links */}
-        <div className="flex gap-8 items-center justify-start mt-auto mb-12">
-          {socials.map(({ icon, name, url }) => (
-            <a key={name} href={url} target="_blank" rel="noopener noreferrer">
+        <div className="flex gap-4 lg:gap-8 items-center justify-start mt-auto mb-12">
+          {socials.map(({ icon, name, url }) => {
+            const isLanguage = name === "English" || name === "Greek";
+            return (
+            <a
+              key={name}
+              href={isLanguage ? "#" : url}
+              target={isLanguage ? undefined : "_blank"}
+              rel={isLanguage ? undefined : "noopener noreferrer"}
+              className="relative flex items-center justify-center group"
+              onClick={(e) => {
+                if (isLanguage) {
+                  e.preventDefault(); 
+                  handleLanguageChange(url);
+                }
+              }}
+            >
               <img
                 src={icon}
                 alt={name}
-                className={`w-8 h-8 transition-transform active:scale-95 ${
-                  name === "LinkedIn" ? "rounded-full" : ""
-                }`}
+                className={`w-6 h-6 text-white cursor-pointer transition-all duration-300 group-hover:scale-120 group-hover:-translate-y-1
+                        ${name === "LinkedIn" ? "rounded-full" : ""}
+                        ${currentLanguage === url ? "border border-black rounded-full p-px" : ""}`}
               />
+
+              <div
+                className="absolute top-10 flex flex-col items-center
+                           opacity-0 translate-y-0 scale-75
+                           group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100
+                           transition-all duration-300 pointer-events-none"
+              >
+                <div className="px-3 py-1 text-xs text-black font-inter bg-black/10 backdrop-blur-md rounded-md border border-white/20">
+                  {name}
+                </div>
+              </div>
             </a>
-          ))}
+          )})}
         </div>
       </div>
     </div>

@@ -16,5 +16,14 @@
         "fourthTextB": "By rubbing a traditional tool called a <1>“ladanisterion”</1> over the plant, the resin sticks to its leather strips. Slowly and methodically, the resin is collected from the leaves. The tools are then left in the sun so the Labdanum becomes warm and soft, making it easier to separate using a <1>“Xistre,”</1> a specialized tool designed to drag the resin from the strips.",
         "fifthTitle": "Laboratory & Quality Assurance",
         "fifthText": "Once collected, the solid Labdanum is brought to our laboratory for careful finishing and quality control. It undergoes final testing for hardness, smell, and burning properties. Only then is it ready for our packaging section, where it is kept under strictly controlled temperatures to preserve its unique, ancient attributes."
+    },
+    "contact": {
+        "getInTouch": "Get in Touch",
+        "haveQuestions": "Have questions about our products? We'd love to hear from you. Choose your preferred method to reach out.",
+        "emailUs": "Email Us",
+        "callUs": "Call Us"
+    },
+    "imageGallery": {
+        "imageGal": "Image Gallery"
     }
 }
