@@ -9,6 +9,7 @@ import Labdanum6 from "./../assets/Labdanum6.jpg";
 import Labdanum7 from "./../assets/Labdanum7.png";
 import Labdanum8 from "./../assets/Labdanum8.jpg";
 import Labdanum9 from "./../assets/Labdanum9.webp";
+import Labdanum10 from "./../assets/Labdanum10.webp";
 
 import leftArrow from "./../assets/left-arrow.svg";
 import rightArrow from "./../assets/right-arrow.svg";
@@ -24,6 +25,7 @@ const images = [
   Labdanum7,
   Labdanum8,
   Labdanum9,
+  Labdanum10,
 ];
 
 const ImageGallery = () => {
@@ -144,7 +146,9 @@ const ImageGallery = () => {
                   if (!isTransitioning) setCurrentIndex(index + 1);
                 }}
                 className={`w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  isActive ? "bg-white w-4 sm:w-6" : "bg-white/50 hover:bg-white/80"
+                  isActive
+                    ? "bg-white w-4 sm:w-6"
+                    : "bg-white/50 hover:bg-white/80"
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
