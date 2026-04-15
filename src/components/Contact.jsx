@@ -2,7 +2,7 @@ import React from "react";
 import "./../assets/css/custom.css";
 import phoneIcon from "./../assets/contact/telephone.png";
 import emailIcon from "./../assets/contact/email.png";
-import viberIcon from "./../assets/contact/viberContact.svg";
+import whatsappIcon from "./../assets/contact/whatsappContact.svg";
 import { useTranslation } from "react-i18next";
 
 const Contact = () => {
@@ -21,11 +21,13 @@ const Contact = () => {
 
       <div className="flex flex-col xl:flex-row items-center justify-center gap-6 w-full max-w-4xl">
         <a
-          href="tel:+306945294725"
+          href="https://wa.me/306945294725"
+          target="_blank"
+          rel="noopener noreferrer"
           className="min-w-[80vw] sm:min-w-100 group flex flex-col items-center p-8 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-gray-200 transition-all duration-300 transform hover:-translate-y-1"
         >
           <div className="p-4 bg-amber-50 text-[#d07ea5] rounded-full mb-5 group-hover:scale-110 transition-transform duration-300">
-            <img src={viberIcon} alt="email" className="w-8 h-8" />
+            <img src={whatsappIcon} alt="WhatsApp" className="w-8 h-8" />
           </div>
           <h3 className="text-xl font-semibold text-gray-900 mb-2">WhatsApp</h3>
           <p className="text-gray-600 font-roboto-slab font-medium group-hover:text-[#d07ea5] transition-colors">
@@ -38,7 +40,7 @@ const Contact = () => {
           className="min-w-[80vw] sm:min-w-100 group flex flex-col items-center p-8 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-gray-200 transition-all duration-300 transform hover:-translate-y-1"
         >
           <div className="p-4 bg-amber-50 text-[#d07ea5] rounded-full mb-5 group-hover:scale-110 transition-transform duration-300">
-            <img src={phoneIcon} alt="email" className="w-8 h-8" />
+            <img src={phoneIcon} alt="Phone" className="w-8 h-8" />
           </div>
           <h3 className="text-xl font-semibold text-gray-900 mb-2">
             {" "}
@@ -54,7 +56,7 @@ const Contact = () => {
           className="min-w-[80vw] sm:min-w-100 group flex flex-col items-center py-8 sm:p-8 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-gray-200 transition-all duration-300 transform hover:-translate-y-1"
         >
           <div className="p-4 bg-amber-50 text-[#d07ea5] rounded-full mb-5 group-hover:scale-110 transition-transform duration-300">
-            <img src={emailIcon} alt="email" className="w-8 h-8" />
+            <img src={emailIcon} alt="Email" className="w-8 h-8" />
           </div>
           <h3 className="text-xl font-semibold text-gray-900 mb-2">
             {t("contact.emailUs")}
