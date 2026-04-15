@@ -1,36 +1,35 @@
 import React, { useEffect, useRef, useState } from "react";
 import logo from "./../assets/logo.png";
-import viber from "./../assets/socials/viber.svg";
+import youtube from "./../assets/socials/youtube.svg";
 import whatsapp from "./../assets/socials/whatsapp.svg";
 import linkedin from "./../assets/socials/linkedin.svg";
 import "./../assets/css/custom.css";
 import cross from "./../assets/header/cross.svg";
 import menu from "./../assets/header/menu.svg";
-import greekSvg from "./../assets/lngs/greek.svg"
-import englishSvg from "./../assets/lngs/english.svg"
 import { useTranslation } from "react-i18next";
+import topArrow from "./../assets/top-arrow.svg";
 
 import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, useGSAP);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const socials = [
-  { name: "Greek", icon: greekSvg, url: "el" },
-  { name: "English", icon: englishSvg, url: "en" },
   {
     name: "LinkedIn",
     icon: linkedin,
     url: "https://www.linkedin.com/in/cretan-labdanum-74a50abb/",
   },
-  { name: "Viber", icon: viber, url: "viber://chat?number=%2B306945294725" },
   { name: "WhatsApp", icon: whatsapp, url: "https://wa.me/306945294725" },
+  {
+    name: "Youtube",
+    icon: youtube,
+    url: "https://www.youtube.com/channel/UCxhUXIqiZ4fzd_NbZA7l_EA",
+  },
 ];
 
 const Header = () => {
-  const logoRef = useRef(null);
   const headerRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -38,13 +37,30 @@ const Header = () => {
   const { t, i18n } = useTranslation();
 
   const headerSections = [
-    { name: t("header.cretan"), icon: linkedin, url: "#home" },
-    { name: t("header.about"), icon: viber, url: "#about" },
-    { name: t("header.imageGallery"), icon: whatsapp, url: "#gallery" },
-    { name: t("header.contact"), icon: whatsapp, url: "#contact" },
+    {
+      name: t("header.cretan"),
+      url: "#home",
+      subItems: [
+        { name: t("header.phyto"), url: "#phyto" },
+        { name: t("header.resin"), url: "#resin" },
+        {
+          name: t("header.product"),
+          url: "#product",
+        },
+      ],
+    },
+    { name: t("header.about"), url: "#about" },
+    { name: t("header.imageGallery"), url: "#gallery" },
+    { name: t("header.contact"), url: "#contact" },
   ];
 
   const [currentLanguage, setCurrentLanguage] = useState("en");
+
+  const [activeDropdown, setActiveDropdown] = useState(null);
+
+  const toggleDropdown = (url) => {
+    setActiveDropdown(activeDropdown === url ? null : url);
+  };
 
   useEffect(() => {
     if (!i18n.language) {
@@ -57,62 +73,6 @@ const Header = () => {
   const handleLanguageChange = (lng) => {
     i18n.changeLanguage(lng);
   };
-
-  useGSAP(
-    () => {
-      gsap.set(logoRef.current, {
-        xPercent: -50,
-        yPercent: -50,
-        left: "50%",
-        top: "30%",
-      });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: "body",
-          start: "top top",
-          end: "400px top",
-          scrub: 1,
-        },
-        defaults: {
-          ease: "power3.out",
-        },
-      });
-
-      tl.to(
-        logoRef.current,
-        {
-          left: "36px",
-          top: "50%",
-          yPercent: -50,
-          xPercent: 0,
-          height: "80px",
-          duration: 1,
-        },
-        0,
-      );
-
-      tl.to(
-        headerRef.current,
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-        },
-        0,
-      );
-
-      tl.to(
-        containerRef.current,
-        {
-          height: "100px",
-          duration: 1,
-        },
-        0,
-      );
-    },
-    { dependencies: [], scope: containerRef },
-  );
 
   const handleScroll = (e, targetId) => {
     e.preventDefault();
@@ -135,82 +95,117 @@ const Header = () => {
       ref={containerRef}
       className="fixed w-full h-screen z-50 pointer-events-none"
     >
-      <img
-        ref={logoRef}
-        src={logo}
-        alt="Cretan Labdamun"
-        className="h-[25vh] sm:h-[35vh] w-auto absolute z-52 pointer-events-auto"
-      />
-
       {/* Main Header Container */}
       <div
         ref={headerRef}
-        className="opacity-0 -translate-y-full w-full h-25 flex items-center justify-between border-b border-[#d9d9d9] px-6 sm:px-9 py-2 bg-white pointer-events-auto relative z-[51]"
+        className="w-full h-25 flex items-center justify-between border-b border-[#d9d9d9] px-6 2xl:px-9 py-2 
+        bg-white pointer-events-auto relative z-51"
       >
-        <div className="w-20 h-20"></div>
+        <img
+          src={logo}
+          alt="Cretan Labdamun"
+          className="h-20 w-auto z-52 pointer-events-auto"
+        />
 
-        {/* Desktop Navigation (Hidden on < 1024px) */}
-        <div className="hidden lg:flex items-center justify-center gap-10">
-          <div className="flex gap-5 xl:gap-10 items-center justify-center text-lg font-poppins font-light">
+        {/* Desktop Navigation (Hidden on < 1280px) */}
+        <div className="hidden xl:flex items-center justify-center gap-10">
+          <div className="flex gap-5 2xl:gap-10 items-center justify-center text-lg font-roboto-slab font-light">
             {headerSections.map((header) => (
-              <a
-                key={header.url}
-                href={header.url}
-                onClick={(e) => handleScroll(e, header.url)}
-                className="group transition-all duration-300 hover:-translate-y-1 max-w-max"
-              >
-                <div className="relative cursor-pointer">
-                  {header?.name}
-                  <span className="absolute left-0 -bottom-1 h-px w-0 bg-black transition-all duration-500 group-hover:w-full"></span>
-                </div>
-              </a>
+              <div key={header.url} className="relative group">
+                {/* Main Header Link */}
+                <a
+                  href={header.url}
+                  onClick={(e) => handleScroll(e, header.url)}
+                  className="transition-all duration-300 hover:-translate-y-1 block max-w-max"
+                >
+                  <div className="relative cursor-pointer">
+                    {header?.name}
+                    {/* Animated Underline */}
+                    <span className="absolute left-0 -bottom-1 h-px w-0 bg-black transition-all duration-500 group-hover:w-full"></span>
+                  </div>
+                </a>
+
+                {/* Dropdown Menu (Only renders if subItems exist) */}
+                {header.subItems && (
+                  <div className="absolute left-0 top-full pt-4 hidden group-hover:flex flex-col w-72 z-50">
+                    <div className="bg-white shadow-lg border border-gray-100 rounded-md p-3 flex flex-col gap-2">
+                      {header.subItems.map((sub, index) => (
+                        <a
+                          key={index}
+                          href={sub.url}
+                          onClick={(e) => handleScroll(e, sub.url)}
+                          className="text-base text-gray-700 hover:text-black hover:bg-gray-50 p-2 rounded transition-colors duration-200"
+                        >
+                          {sub.name}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </div>
 
-        {/* Desktop Socials (Hidden on < 1024px) */}
-        <div className="hidden lg:flex gap-3 xl:gap-6 items-center justify-center">
-          {socials.map(({ icon, name, url }) => {
-            const isLanguage = name === "English" || name === "Greek";
-            return (
-            <a
-              key={name}
-              href={isLanguage ? "#" : url}
-              target={isLanguage ? undefined : "_blank"}
-              rel={isLanguage ? undefined : "noopener noreferrer"}
-              className="relative flex items-center justify-center group"
-              onClick={(e) => {
-                if (isLanguage) {
-                  e.preventDefault(); 
-                  handleLanguageChange(url);
-                }
-              }}
-            >
-              <img
-                src={icon}
-                alt={name}
-                className={`w-6 h-6 text-white cursor-pointer transition-all duration-300 group-hover:scale-120 group-hover:-translate-y-1
-                        ${name === "LinkedIn" ? "rounded-full" : ""}
-                        ${currentLanguage === url ? "border border-black rounded-full p-px" : ""}`}
-              />
+        {/* Desktop Socials (Hidden on < 1280px) */}
+        <div className="hidden xl:flex gap-3 2xl:gap-6 items-center justify-center">
+          <div
+            className={`border-b font-roboto-slab font-light transition-colors duration-300 ease-in-out cursor-pointer ${
+              currentLanguage === "en" ? "border-black" : "border-transparent"
+            }`}
+            onClick={(e) => {
+              e.preventDefault();
+              handleLanguageChange("en");
+            }}
+          >
+            {t("header.english")}
+          </div>
+          <div
+            className={`border-b font-roboto-slab font-light transition-colors duration-300 ease-in-out cursor-pointer ${
+              currentLanguage === "el" ? "border-black" : "border-transparent"
+            }`}
+            onClick={(e) => {
+              e.preventDefault();
+              handleLanguageChange("el");
+            }}
+          >
+            {t("header.greek")}
+          </div>
 
-              <div
-                className="absolute top-10 flex flex-col items-center
+          {socials.map(({ icon, name, url }) => {
+            return (
+              <a
+                key={name}
+                href={url}
+                target={"_blank"}
+                rel={"noopener noreferrer"}
+                className="relative flex items-center justify-center group"
+              >
+                <img
+                  src={icon}
+                  alt={name}
+                  className={`w-6 h-6 text-white cursor-pointer transition-all duration-300 group-hover:scale-120 group-hover:-translate-y-1
+                        ${name === "LinkedIn" ? "rounded-full" : ""}`}
+                />
+
+                <div
+                  className="absolute top-10 flex flex-col items-center
                            opacity-0 translate-y-0 scale-75
                            group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100
                            transition-all duration-300 pointer-events-none"
-              >
-                <div className="px-3 py-1 text-xs text-black font-inter bg-black/10 backdrop-blur-md rounded-md border border-white/20">
-                  {name}
+                >
+                  <div className="px-3 py-1 text-xs text-black font-roboto-slab bg-black/10 backdrop-blur-md rounded-md border border-white/20">
+                    {name}
+                  </div>
                 </div>
-              </div>
-            </a>
-          )})}
+              </a>
+            );
+          })}
         </div>
 
-        {/* Mobile Hamburger Button (Visible on < 1024px) */}
+        {/* Mobile Hamburger Button (Visible on < 1280px) */}
         <button
-          className="block lg:hidden p-2 text-black focus:outline-none transition-transform active:scale-95"
+          className="block xl:hidden p-2 text-black focus:outline-none transition-transform active:scale-95"
           onClick={() => setIsMenuOpen(true)}
         >
           <img src={menu} alt="|||" className="w-7 sm:w-8 h-7 sm:h-8" />
@@ -219,7 +214,7 @@ const Header = () => {
 
       {/* Mobile Menu Backdrop Overlay */}
       <div
-        className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-52 transition-opacity duration-300 lg:hidden ${
+        className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-52 transition-opacity duration-300 xl:hidden ${
           isMenuOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
@@ -229,7 +224,7 @@ const Header = () => {
 
       {/* Mobile Slide-out Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-[80vw] max-w-sm bg-white z-53 transform transition-transform duration-500 ease-in-out flex flex-col pt-24 px-8 shadow-2xl pointer-events-auto lg:hidden ${
+        className={`fixed top-0 right-0 h-full w-[80vw] max-w-sm bg-white z-53 transform transition-transform duration-500 ease-in-out flex flex-col pt-24 px-8 shadow-2xl pointer-events-auto xl:hidden ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -242,57 +237,120 @@ const Header = () => {
         </button>
 
         {/* Mobile Nav Links */}
-        <div className="flex flex-col gap-6 text-lg font-poppins font-light mt-4">
+        <div className="flex flex-col gap-6 text-lg font-roboto-slab font-light mt-4">
           {headerSections.map((header) => (
-            <a
+            <div
               key={header.url}
-              href={header.url}
-              onClick={(e) => handleScroll(e, header.url)}
-              className="border-b border-gray-100 pb-4 text-black hover:text-gray-500 transition-colors"
+              className="border-b border-gray-100 pb-4 flex flex-col"
             >
-              {header.name}
-            </a>
+              {/* Main Link & Toggle Button Container */}
+              <div className="flex justify-between items-center">
+                <a
+                  href={header.url}
+                  onClick={(e) => handleScroll(e, header.url)}
+                  className="text-black hover:text-gray-500 transition-colors"
+                >
+                  {header.name}
+                </a>
+
+                {/* Dropdown Toggle Arrow (Only shows if subItems exist) */}
+                {header.subItems && (
+                  <button
+                    onClick={() => toggleDropdown(header.url)}
+                    className="p-2 text-gray-500 hover:text-black"
+                    aria-label="Toggle sub-menu"
+                  >
+                    <img
+                      src={topArrow}
+                      alt="^"
+                      className={`w-5 h-5 transition-transform duration-300 ${
+                        activeDropdown === header.url ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                )}
+              </div>
+
+              {/* Mobile Expandable Sub-menu */}
+              {header.subItems && activeDropdown === header.url && (
+                <div className="flex flex-col gap-4 mt-4 pl-4 border-l-2 border-gray-200 animate-fade-in-down">
+                  {header.subItems.map((sub, index) => (
+                    <a
+                      key={index}
+                      href={sub.url}
+                      onClick={(e) => {
+                        handleScroll(e, sub.url);
+                        toggleDropdown();
+                      }}
+                      className="text-base text-gray-600 hover:text-black transition-colors"
+                    >
+                      {sub.name}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
         </div>
 
         {/* Mobile Social Links */}
-        <div className="flex gap-4 lg:gap-8 items-center justify-start mt-auto mb-12">
-          {socials.map(({ icon, name, url }) => {
-            const isLanguage = name === "English" || name === "Greek";
-            return (
-            <a
-              key={name}
-              href={isLanguage ? "#" : url}
-              target={isLanguage ? undefined : "_blank"}
-              rel={isLanguage ? undefined : "noopener noreferrer"}
-              className="relative flex items-center justify-center group"
+        <div className="flex flex-col gap-4 lg:gap-8 mt-auto mb-12">
+          <div className="flex flex-col gap-2 font-roboto-slab font-light">
+            <div
+              className={`border-b max-w-max transition-colors duration-300 ease-in-out cursor-pointer ${
+                currentLanguage === "en" ? "border-black" : "border-transparent"
+              }`}
               onClick={(e) => {
-                if (isLanguage) {
-                  e.preventDefault(); 
-                  handleLanguageChange(url);
-                }
+                e.preventDefault();
+                handleLanguageChange("en");
               }}
             >
-              <img
-                src={icon}
-                alt={name}
-                className={`w-6 h-6 text-white cursor-pointer transition-all duration-300 group-hover:scale-120 group-hover:-translate-y-1
-                        ${name === "LinkedIn" ? "rounded-full" : ""}
-                        ${currentLanguage === url ? "border border-black rounded-full p-px" : ""}`}
-              />
+              {t("header.english")}
+            </div>
+            <div
+              className={`border-b max-w-max transition-colors duration-300 ease-in-out cursor-pointer ${
+                currentLanguage === "el" ? "border-black" : "border-transparent"
+              }`}
+              onClick={(e) => {
+                e.preventDefault();
+                handleLanguageChange("el");
+              }}
+            >
+              {t("header.greek")}
+            </div>
+          </div>
 
-              <div
-                className="absolute top-10 flex flex-col items-center
+          <div className="flex gap-4 lg:gap-8 items-center justify-start">
+            {socials.map(({ icon, name, url }) => {
+              return (
+                <a
+                  key={name}
+                  href={url}
+                  target={"_blank"}
+                  rel={"noopener noreferrer"}
+                  className="relative flex items-center justify-center group"
+                >
+                  <img
+                    src={icon}
+                    alt={name}
+                    className={`w-6 h-6 text-white cursor-pointer transition-all duration-300 group-hover:scale-120 group-hover:-translate-y-1
+                        ${name === "LinkedIn" ? "rounded-full" : ""}`}
+                  />
+
+                  <div
+                    className="absolute top-10 flex flex-col items-center
                            opacity-0 translate-y-0 scale-75
                            group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100
                            transition-all duration-300 pointer-events-none"
-              >
-                <div className="px-3 py-1 text-xs text-black font-inter bg-black/10 backdrop-blur-md rounded-md border border-white/20">
-                  {name}
-                </div>
-              </div>
-            </a>
-          )})}
+                  >
+                    <div className="px-3 py-1 text-xs text-black font-roboto-slab bg-black/10 backdrop-blur-md rounded-md border border-white/20">
+                      {name}
+                    </div>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

@@ -2,14 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import "./../assets/css/custom.css";
 import Labdanum1 from "./../assets/Labdanum1.jpg";
 import Labdanum2 from "./../assets/Labdanum2.jpg";
-import Labdanum3 from "./../assets/Labdanum3.png";
 import Labdanum4 from "./../assets/Labdanum4.jpg";
 import Labdanum5 from "./../assets/Labdanum5.jpg";
 import Labdanum6 from "./../assets/Labdanum6.jpg";
 import Labdanum7 from "./../assets/Labdanum7.png";
 import Labdanum8 from "./../assets/Labdanum8.jpg";
-import Labdanum9 from "./../assets/Labdanum9.webp";
+import Labdanum9 from "./../assets/Labdanum9.jpg";
 import Labdanum10 from "./../assets/Labdanum10.webp";
+import Labdanum11 from "./../assets/Labdanum11.webp";
+import Labdanum12 from "./../assets/Labdanum12.webp";
+import Labdanum13 from "./../assets/Labdanum13.jpg";
 
 import leftArrow from "./../assets/left-arrow.svg";
 import rightArrow from "./../assets/right-arrow.svg";
@@ -18,7 +20,6 @@ import { useTranslation } from "react-i18next";
 const images = [
   Labdanum4,
   Labdanum2,
-  Labdanum3,
   Labdanum1,
   Labdanum5,
   Labdanum6,
@@ -26,6 +27,9 @@ const images = [
   Labdanum8,
   Labdanum9,
   Labdanum10,
+  Labdanum11,
+  Labdanum12,
+  Labdanum13,
 ];
 
 const ImageGallery = () => {
@@ -81,7 +85,7 @@ const ImageGallery = () => {
 
   return (
     <div className="flex flex-col items-center justify-center my-30 sm:my-40 px-4 sm:px-6 lg:px-8">
-      <h1 className="text-center text-2xl font-montserrat font-bold">
+      <h1 className="text-center text-2xl font-roboto-slab font-bold">
         {t("imageGallery.imageGal")}
       </h1>
 
