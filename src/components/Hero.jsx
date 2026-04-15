@@ -16,7 +16,7 @@ const Hero = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center overflow-hidden">
       <div className="font-roboto-slab mx-auto text-lg font-light">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 id="phyto" className="text-xl font-bold  mb-3">
