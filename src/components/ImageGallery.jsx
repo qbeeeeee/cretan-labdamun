@@ -9,8 +9,8 @@ import Labdanum7 from "./../assets/Labdanum7.png";
 import Labdanum8 from "./../assets/Labdanum8.jpg";
 import Labdanum9 from "./../assets/Labdanum9.jpg";
 import Labdanum10 from "./../assets/Labdanum10.webp";
-import Labdanum11 from "./../assets/Labdanum11.webp";
-import Labdanum12 from "./../assets/Labdanum12.webp";
+import Labdanum11 from "./../assets/Labdanum11.jpg";
+import Labdanum12 from "./../assets/Labdanum12.jpg";
 import Labdanum13 from "./../assets/Labdanum13.jpg";
 
 import leftArrow from "./../assets/left-arrow.svg";

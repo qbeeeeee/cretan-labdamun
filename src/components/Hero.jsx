@@ -1,6 +1,6 @@
 import React from "react";
 import heroImage from "../assets/Labdanum4.jpg";
-import Labdanum11 from "../assets/Labdanum11.webp";
+import Labdanum11 from "../assets/Labdanum11.jpg";
 import Labdanum10 from "../assets/Labdanum10.webp";
 import Labdanum9 from "../assets/Labdanum9.jpg";
 import "../assets/css/custom.css";
