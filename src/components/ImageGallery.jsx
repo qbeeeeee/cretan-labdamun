@@ -36,6 +36,7 @@ const ImageGallery = () => {
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false); // New state for lightbox
   const trackRef = useRef(null);
 
   // [Last Image, ...All Images, First Image]
@@ -72,7 +73,6 @@ const ImageGallery = () => {
   // Restore the smooth transition after our invisible snap
   useEffect(() => {
     if (!isTransitioning && trackRef.current) {
-      // requestAnimationFrame ensures the DOM updates without transition first
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           if (trackRef.current) {
@@ -82,6 +82,18 @@ const ImageGallery = () => {
       });
     }
   }, [currentIndex, isTransitioning]);
+
+  // Prevent background scrolling when image is expanded
+  useEffect(() => {
+    if (isExpanded) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isExpanded]);
 
   return (
     <div className="flex flex-col items-center justify-center my-30 sm:my-40 px-4 sm:px-6 lg:px-8">
@@ -105,7 +117,8 @@ const ImageGallery = () => {
               key={index}
               src={imgSrc}
               alt={`Labdanum slide ${index}`}
-              className="w-full h-full object-contain shrink-0"
+              onClick={() => setIsExpanded(true)} // Open modal on click
+              className="w-full h-full object-contain shrink-0 cursor-pointer transition-transform hover:scale-105 duration-500" // Added cursor and slight hover effect
               loading={
                 index === 0 || index === extendedImages.length - 1
                   ? "lazy"
@@ -119,7 +132,7 @@ const ImageGallery = () => {
         <button
           onClick={prevSlide}
           className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 bg-white/80 backdrop-blur-md cursor-pointer
-         hover:bg-white/60 text-white hover:text-gray-900 rounded-full transition-all shadow-lg"
+         hover:bg-white/60 text-white hover:text-gray-900 rounded-full transition-all shadow-lg z-10"
           aria-label="Previous slide"
         >
           <img src={leftArrow} alt="<" className="h-4 sm:h-5 w-auto" />
@@ -129,14 +142,14 @@ const ImageGallery = () => {
         <button
           onClick={nextSlide}
           className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 bg-white/80 backdrop-blur-md cursor-pointer
-         hover:bg-white/60 text-white hover:text-gray-900 rounded-full transition-all shadow-lg"
+         hover:bg-white/60 text-white hover:text-gray-900 rounded-full transition-all shadow-lg z-10"
           aria-label="Next slide"
         >
-          <img src={rightArrow} alt="<" className="h-4 sm:h-5 w-auto" />
+          <img src={rightArrow} alt=">" className="h-4 sm:h-5 w-auto" />
         </button>
 
         {/* Navigation Dots */}
-        <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3 bg-black/20 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
+        <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3 bg-black/20 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full z-10">
           {images.map((_, index) => {
             const isActive =
               currentIndex === index + 1 ||
@@ -160,6 +173,54 @@ const ImageGallery = () => {
           })}
         </div>
       </div>
+
+      {/* --- Fullscreen Expanded View (Lightbox) --- */}
+      {isExpanded && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md">
+          {/* Close Button */}
+          <button
+            onClick={() => setIsExpanded(false)}
+            className="absolute top-4 right-4 sm:top-8 sm:right-8 text-white/70 hover:text-white text-4xl sm:text-5xl cursor-pointer transition-colors z-[60]"
+            aria-label="Close fullscreen"
+          >
+            &times;
+          </button>
+
+          {/* Left Arrow (Lightbox) */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-2 sm:left-8 top-1/2 -translate-y-1/2 p-3 sm:p-5 bg-black/50 hover:bg-white/20 rounded-full transition-all cursor-pointer z-[60]"
+            aria-label="Previous slide"
+          >
+            {/* If your custom SVG is dark, you can use CSS filters like 'invert' or just text */}
+            <img
+              src={leftArrow}
+              alt="<"
+              className="h-6 sm:h-8 w-auto brightness-200 invert"
+            />
+          </button>
+
+          {/* Right Arrow (Lightbox) */}
+          <button
+            onClick={nextSlide}
+            className="absolute right-2 sm:right-8 top-1/2 -translate-y-1/2 p-3 sm:p-5 bg-black/50 hover:bg-white/20 rounded-full transition-all cursor-pointer z-[60]"
+            aria-label="Next slide"
+          >
+            <img
+              src={rightArrow}
+              alt=">"
+              className="h-6 sm:h-8 w-auto brightness-200 invert"
+            />
+          </button>
+
+          {/* Expanded Image */}
+          <img
+            src={extendedImages[currentIndex]}
+            alt={`Expanded slide`}
+            className="max-h-[90vh] max-w-[90vw] object-contain select-none shadow-2xl"
+          />
+        </div>
+      )}
     </div>
   );
 };

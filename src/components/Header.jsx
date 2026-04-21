@@ -41,6 +41,7 @@ const Header = () => {
       name: t("header.cretan"),
       url: "#home",
       subItems: [
+        { name: t("header.labdanum"), url: "#home" },
         { name: t("header.phyto"), url: "#phyto" },
         { name: t("header.resin"), url: "#resin" },
         {
