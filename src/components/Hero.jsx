@@ -33,7 +33,7 @@ const Hero = () => {
           <div
             ref={bannerRef}
             className="text-white absolute left-3 sm:left-8 xl:left-14 top-1/2 transform -translate-y-1/2 
-            text-[14px] sm:text-[20px] lg:text-3xl xl:text-4xl font-bold text-center
+            text-[12px] sm:text-[20px] lg:text-3xl xl:text-4xl font-light text-center
             tracking-tight sm:tracking-normal"
           >
             <Trans
