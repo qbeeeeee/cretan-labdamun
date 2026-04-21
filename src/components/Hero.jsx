@@ -14,7 +14,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const Hero = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const bannerRef = useRef(null);
 
   useGSAP(() => {
@@ -24,7 +24,7 @@ const Hero = () => {
       duration: 1.3,
       ease: "power3.out",
     });
-  }, []);
+  }, [i18n.language]);
 
   return (
     <div className="flex flex-col items-center justify-center overflow-hidden">
