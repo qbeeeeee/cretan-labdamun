@@ -217,7 +217,7 @@ const ImageGallery = () => {
           <img
             src={extendedImages[currentIndex]}
             alt={`Expanded slide`}
-            className="max-h-[90vh] max-w-[90vw] object-contain select-none shadow-2xl"
+            className="max-h-[90vh] max-w-[90vw] bg-white object-contain select-none shadow-2xl"
           />
         </div>
       )}
