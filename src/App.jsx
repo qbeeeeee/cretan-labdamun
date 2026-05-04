@@ -11,15 +11,17 @@ const App = () => {
         <Header />
       </div>
 
-      <Hero />
+      <main>
+        <Hero />
 
-      <div id="gallery">
-        <ImageGallery />
-      </div>
+        <div id="gallery">
+          <ImageGallery />
+        </div>
 
-      <div id="contact">
-        <Contact />
-      </div>
+        <div id="contact">
+          <Contact />
+        </div>
+      </main>
     </div>
   );
 };
