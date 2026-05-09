@@ -47,7 +47,7 @@ const Hero = () => {
 
           <img
             src={heroImage}
-            alt="Cretan Labdanum"
+            alt="Cretan Labdanum - Αυθεντικός Λάβδανος Κρήτης"
             className="h-auto w-screen max-w-[100vw] max-h-[80vh] object-cover mx-auto mb-15"
           />
         </div>
@@ -62,7 +62,7 @@ const Hero = () => {
 
         <img
           src={Labdanum6}
-          alt="Cretan Labdanum"
+          alt="Cretan Labdanum - Αυθεντικός Λάβδανος Κρήτης"
           className="h-150 w-auto max-w-[100vw] max-h-150 2xl:rounded-[20px] object-cover mx-auto my-15"
         />
 
@@ -76,7 +76,7 @@ const Hero = () => {
 
         <img
           src={Labdanum11}
-          alt="Cretan Labdanum"
+          alt="Cretan Labdanum - Αυθεντικός Λάβδανος Κρήτης"
           className="h-auto w-360 max-w-[100vw] max-h-170 2xl:rounded-[20px] object-cover mx-auto my-15"
         />
 
@@ -86,7 +86,7 @@ const Hero = () => {
 
         <img
           src={Labdanum10}
-          alt="Cretan Labdanum"
+          alt="Cretan Labdanum - Αυθεντικός Λάβδανος Κρήτης"
           className="h-auto w-360 max-w-[100vw] max-h-145 2xl:rounded-[20px] object-cover mx-auto mt-20 mb-5"
         />
 
@@ -100,7 +100,7 @@ const Hero = () => {
 
         <img
           src={Labdanum9}
-          alt="Cretan Labdanum"
+          alt="Cretan Labdanum - Αυθεντικός Λάβδανος Κρήτης"
           className="h-auto w-4xl max-w-[100vw] max-h-145 2xl:rounded-[20px] object-cover mx-auto my-15"
         />
 
